@@ -92,7 +92,7 @@ text
 - Docker image `abhdoc/project1:latest` available on Docker Hub
 - Minimum 2 CPUs and 2GB RAM
 
-### 1. Start Minikube
+### Start Minikube
 
 ```bash
 minikube start --driver=docker --cpus=2 --memory=1800
