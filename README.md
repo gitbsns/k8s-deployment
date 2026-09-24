@@ -27,26 +27,20 @@ This project takes the containerized Node.js application from **Project 1** and 
 
 ## 🏗️ Architecture
 
+## 🏗️ Architecture
+
 ```mermaid
-graph TD
-    User([User / Browser]) -->|HTTP| Service[Service<br/>myapp-service<br/>NodePort 30007]
-    Service -->|Load Balance| Pod1[Pod 1<br/>abhdoc/project1:latest]
-    Service -->|Load Balance| Pod2[Pod 2<br/>abhdoc/project1:latest]
-    
-    CM[ConfigMap<br/>myapp-config] -.->|Inject Env| Pod1
-    CM -.->|Inject Env| Pod2
-    SEC[Secret<br/>myapp-secret] -.->|Inject Env| Pod1
-    SEC -.->|Inject Env| Pod2
-    
-    Deploy[Deployment<br/>myapp-deployment<br/>Replicas: 2] -->|Manages| Pod1
+flowchart TD
+    User([User / Browser]) -->|HTTP| Service[myapp-service NodePort 30007]
+    Service -->|Load Balance| Pod1[Pod 1 abhdoc/project1:latest]
+    Service -->|Load Balance| Pod2[Pod 2 abhdoc/project1:latest]
+    CM[ConfigMap myapp-config] -.->|Env Vars| Pod1
+    CM -.->|Env Vars| Pod2
+    SEC[Secret myapp-secret] -.->|Secrets| Pod1
+    SEC -.->|Secrets| Pod2
+    Deploy[Deployment myapp-deployment Replicas 2] -->|Manages| Pod1
     Deploy -->|Manages| Pod2
-    
-    style Service fill:#326CE5,color:#fff
-    style Pod1 fill:#4285F4,color:#fff
-    style Pod2 fill:#4285F4,color:#fff
-    style CM fill:#34A853,color:#fff
-    style SEC fill:#EA4335,color:#fff
-    style Deploy fill:#FBBC04,color:#000
+
 Component Overview
 Component	Type	Purpose
 Deployment	myapp-deployment	Manages 2 replicas of the app
