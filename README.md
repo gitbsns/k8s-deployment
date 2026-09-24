@@ -26,6 +26,7 @@ This project takes the containerized Node.js application from **Project 1** and 
 ---
 
 ## 🏗️ Architecture
+
 ```mermaid
 graph TD
     User([User / Browser]) -->|HTTP| Service[Service<br/>myapp-service<br/>NodePort 30007]
@@ -46,49 +47,43 @@ graph TD
     style CM fill:#34A853,color:#fff
     style SEC fill:#EA4335,color:#fff
     style Deploy fill:#FBBC04,color:#000
-
----
-
-## 🛠️ Tech Stack
-
-| Category | Tools |
-|----------|-------|
-| **Orchestration** | Kubernetes (Minikube) |
-| **CLI** | kubectl |
-| **Container Runtime** | Docker |
-| **Configuration** | YAML |
-| **Application** | Node.js / Express |
-| **Image Registry** | Docker Hub |
-
----
-
-## 📁 Project Structure
+Component Overview
+Component	Type	Purpose
+Deployment	myapp-deployment	Manages 2 replicas of the app
+Pods	2x myapp	Running containers
+Service	myapp-service (NodePort)	Exposes app on port 30007
+ConfigMap	myapp-config	Non-sensitive env vars
+Secret	myapp-secret	Sensitive data (base64)
+🛠️ Tech Stack
+Category	Tools
+Orchestration	Kubernetes (Minikube)
+CLI	kubectl
+Container Runtime	Docker
+Configuration	YAML
+Application	Node.js / Express
+Image Registry	Docker Hub
+📁 Project Structure
+text
 project2/
 ├── k8s-manifests/
-│ ├── configmap.yaml # Environment variables
-│ ├── secret.yaml # Sensitive data (base64)
-│ ├── deployment.yaml # Pods + ReplicaSet (2 replicas)
-│ └── service.yaml # NodePort service
+│   ├── configmap.yaml      # Environment variables
+│   ├── secret.yaml         # Sensitive data (base64)
+│   ├── deployment.yaml     # Pods + ReplicaSet (2 replicas)
+│   └── service.yaml        # NodePort service
 └── README.md
+🚀 Deployment Steps
+Prerequisites
+Minikube installed and running
 
-text
+kubectl configured
 
----
+Docker image abhdoc/project1:latest available on Docker Hub
 
-## 🚀 Deployment Steps
+Minimum 2 CPUs and 2GB RAM
 
-### Prerequisites
-
-- Minikube installed and running
-- kubectl configured
-- Docker image `abhdoc/project1:latest` available on Docker Hub
-- Minimum 2 CPUs and 2GB RAM
-
-### 1. Start Minikube
-
-```bash
+1. Start Minikube
+bash
 minikube start --driver=docker --cpus=2 --memory=1800
-
 2. Apply Manifests
 bash
 cd k8s-manifests
@@ -100,38 +95,29 @@ configmap/myapp-config created
 secret/myapp-secret created
 deployment.apps/myapp-deployment created
 service/myapp-service created
-
 3. Verify Deployment
-
 bash
 kubectl get pods
 kubectl get svc
 kubectl get deployment
 kubectl get all
-
 4. Access the Application
-
 bash
 minikube service myapp-service --url
 Open the URL in your browser. Test these endpoints:
 
 Endpoint	Purpose
-
 /	App greeting
 /info	ConfigMap/Secret verification
 /health	Health check
-
 🎯 Key Kubernetes Concepts Demonstrated
-
 Concept	Where Used
-
-Deployment	              2 replicas of the app
-Service                   (NodePort)	Exposing app on port 30007
-ConfigMap	                APP_ENV, APP_NAME, LOG_LEVEL
-Secret	                  SESSION_SECRET (base64)
-Liveness Probe	          Auto-restart unhealthy pods
-Readiness Probe	          No traffic until pod ready
-Resource Limits	          CPU/RAM requests and limits
-Labels & Selectors	      Service → Pod discovery
-ReplicaSet	              Ensures desired pod count
-
+Deployment	2 replicas of the app
+Service (NodePort)	Exposing app on port 30007
+ConfigMap	APP_ENV, APP_NAME, LOG_LEVEL
+Secret	SESSION_SECRET (base64)
+Liveness Probe	Auto-restart unhealthy pods
+Readiness Probe	No traffic until pod ready
+Resource Limits	CPU/RAM requests and limits
+Labels & Selectors	Service → Pod discovery
+ReplicaSet	Ensures desired pod count
