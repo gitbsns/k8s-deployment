@@ -92,13 +92,12 @@ text
 - Docker image `abhdoc/project1:latest` available on Docker Hub
 - Minimum 2 CPUs and 2GB RAM
 
-### Start Minikube
+### 1. Start Minikube
 
 ```bash
 minikube start --driver=docker --cpus=2 --memory=1800
 
-### 2. Apply Manifests
-
+2. Apply Manifests
 bash
 cd k8s-manifests
 kubectl apply -f .
@@ -110,7 +109,7 @@ secret/myapp-secret created
 deployment.apps/myapp-deployment created
 service/myapp-service created
 
-### 3. Verify Deployment
+3. Verify Deployment
 
 bash
 kubectl get pods
@@ -118,24 +117,29 @@ kubectl get svc
 kubectl get deployment
 kubectl get all
 
-### 4. Access the Application
+4. Access the Application
 
 bash
 minikube service myapp-service --url
 Open the URL in your browser. Test these endpoints:
 
 Endpoint	Purpose
+
 /	App greeting
 /info	ConfigMap/Secret verification
 /health	Health check
+
 🎯 Key Kubernetes Concepts Demonstrated
+
 Concept	Where Used
-Deployment	2 replicas of the app
-Service (NodePort)	Exposing app on port 30007
-ConfigMap	APP_ENV, APP_NAME, LOG_LEVEL
-Secret	SESSION_SECRET (base64)
-Liveness Probe	Auto-restart unhealthy pods
-Readiness Probe	No traffic until pod ready
-Resource Limits	CPU/RAM requests and limits
-Labels & Selectors	Service → Pod discovery
-ReplicaSet	Ensures desired pod count
+
+Deployment	              2 replicas of the app
+Service                   (NodePort)	Exposing app on port 30007
+ConfigMap	                APP_ENV, APP_NAME, LOG_LEVEL
+Secret	                  SESSION_SECRET (base64)
+Liveness Probe	          Auto-restart unhealthy pods
+Readiness Probe	          No traffic until pod ready
+Resource Limits	          CPU/RAM requests and limits
+Labels & Selectors	      Service → Pod discovery
+ReplicaSet	              Ensures desired pod count
+
