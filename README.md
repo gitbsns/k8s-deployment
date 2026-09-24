@@ -96,7 +96,9 @@ text
 
 ```bash
 minikube start --driver=docker --cpus=2 --memory=1800
-2. Apply Manifests
+
+### 2. Apply Manifests
+
 bash
 cd k8s-manifests
 kubectl apply -f .
@@ -107,13 +109,17 @@ configmap/myapp-config created
 secret/myapp-secret created
 deployment.apps/myapp-deployment created
 service/myapp-service created
-3. Verify Deployment
+
+### 3. Verify Deployment
+
 bash
 kubectl get pods
 kubectl get svc
 kubectl get deployment
 kubectl get all
-4. Access the Application
+
+### 4. Access the Application
+
 bash
 minikube service myapp-service --url
 Open the URL in your browser. Test these endpoints:
